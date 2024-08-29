@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Scrolling</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #f06, transparent);
+        }
+        .content {
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content" class="content"></div>
+
+    <script>
+        const contentDiv = document.getElementById('content');
+        let itemsLoaded = 0;
+
+        // Function to create new content items
+        function createNewItem() {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item';
+            itemDiv.textContent = `Item ${++itemsLoaded}`;
+            contentDiv.appendChild(itemDiv);
+        }
+
+        // Load initial content
+        for (let i = 0; i < 20; i++) {
+            createNewItem();
+        }
+
+        // Function to check if more content needs to be loaded
+        function checkScroll() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                // Load more content if near the bottom
+                for (let i = 0; i < 10; i++) {
+                    createNewItem();
+                }
+            }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
